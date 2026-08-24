@@ -24,19 +24,21 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 
 | File | Contents |
 |---|---|
-| `week5_friday_eda_assessment.ipynb` | Full pipeline: diagnosis → findings.json → justified cleaning → validation asserts → 6 charts → findings → limitations |
+| `week5_friday_eda_assessment.ipynb` | Full pipeline: executive summary → diagnosis → findings.json → justified cleaning → audit ledger → 6 charts → statistical testing → limitations |
 | `tickets_clean.csv` | 4,000 clean rows |
 | `findings.json` | Raw-file issue counts: `{"missing_agent_id": 121, "missing_channel": 193, "duplicate_rows": 12, "negative_resolution_hours": 25, "outlier_resolution_hours": 15}` |
-| `chart_distribution.png` | Histogram: right-skewed durations, median 10.2 h vs mean 12.0 h |
-| `chart_category_comparison.png` | Mean resolution by priority ±95% CI — honest null result |
-| `chart_relationship.png` | Resolution vs creation date + 7-day rolling mean — no drift |
+| `chart_distribution.png` | Histogram with on-chart stats box (n, median, mean, std, max, skew) |
+| `chart_category_comparison.png` | Priority means with **bootstrap 95% CIs** printed per bar — honest null result |
+| `chart_relationship.png` | Date vs resolution scatter — slope, Pearson r and rolling endpoints annotated |
 | `04_before_after_cleaning.png` | **Bonus** — raw vs cleaned overlay; the corrupted mean and the 999-spike vanish visibly |
 | `05_misleading_vs_honest.png` | **Bonus** — truncated vs full y-axis on the same data (quiz Q8 demonstrated) |
 | `06_channel_mix_unknown.png` | **Bonus** — intake mix with the 4.8% Unknown gap kept visible |
 | `theory_quiz_answers.md` | Part 2 written answers (8 questions) |
 | `technical_summary.md` | Standalone plain-language write-up for non-technical readers |
 | `SELF_REVIEW.md` | Requirement-by-requirement verification + adversarial self-review |
+| `PR_DESCRIPTION.md` | Ready-to-paste pull-request body |
 | `build_notebook.py` | Reproducible build script that generates the notebook programmatically |
+| `requirements.txt` | Exact pinned library versions used for this submission |
 
 ## Key results
 
@@ -53,8 +55,8 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
-pip install pandas numpy matplotlib scipy pytest nbformat nbclient nbconvert ipykernel
+# Install exact pinned dependencies (plus notebook tooling)
+pip install -r requirements.txt ipykernel nbconvert nbclient nbformat
 
 # Regenerate dataset (spec-exact, seed=7), rebuild + execute notebook headlessly,
 # then run both test suites — this is exactly how the submission was verified
@@ -70,27 +72,34 @@ notebook itself: `python build_notebook.py full` (or `v1` for diagnosis-only sta
 ## Verification
 
 - **Given self-check:** `test_friday_sample.py` — 3/3 pass.
-- **Self-invented adversarial suite:** `test_own_verification.py` — 14 checks that
+- **Self-invented adversarial suite:** `test_own_verification.py` — 18 checks that
   target "looks correct but is wrong" failures: row-count identity, casing fixed by
   mapping not filtering, Unknown-count == raw-missing-count, agent NaN preserved
-  (not fabricated), findings recomputed from raw AND locked to known values,
-  **PNG magic-byte check** (the given size-only test accepts renamed text files),
-  a statistical canary (mean within 2 h of median detects sentinel leaks),
-  raw-file immutability guard, and bonus-chart format checks. → **17/17 total pass.**
-- **Notebook hygiene:** executed top-to-bottom on a fresh kernel with zero cell errors;
-  post-clean assert battery stops the notebook if any claim breaks; §3.9 proves the
-  raw DataFrame was never modified in place.
+  (not fabricated), findings recomputed from raw AND locked to known values AND
+  key-set equality (stricter than the given subset check), **PNG magic-byte check**
+  (the given size-only test accepts renamed text files), a statistical canary
+  (mean within 2 h of median detects sentinel leaks), raw-file immutability guard,
+  schema-drift detector, plausibility bounds, and requirements-pin enforcement.
+  → **21/21 total pass.**
+- **Notebook hygiene:** executed top-to-bottom on a fresh kernel — 77 cells, zero
+  errors; post-clean assert battery stops the notebook if any claim breaks; §3.9
+  proves the raw DataFrame was never modified in place.
 
 ## Beyond-minimum additions
 
+- Executive summary + contents table — the whole story in 30 seconds.
 - Duplicate-contamination audit (§2.5) and sentinel-vs-IQR-tail separation (§2.4) —
   two analyses the spec never asked for that defend the findings.json convention and
-  protect ~hundreds of legitimate slow tickets from naive outlier filters.
-- Raw-frame integrity proof cell (§3.9), imputation audit trail with ticket IDs (§3.5).
-- Scipy skewness/kurtosis quantifying distribution shape before plotting it.
-- Honest null result on Chart 2 (overlapping CIs reported as "no real difference").
-- Misleading-vs-honest chart demonstrating quiz Q8 mechanism on our own data.
-- Full top-performer documentation set: SELF_REVIEW.md, technical_summary.md, quiz answers.
+  protect hundreds of legitimate slow tickets from naive outlier filters.
+- Consolidated audit section (§3.10): cleaning ledger, completeness scorecard, and a
+  cost-of-dirty-data counterfactual quantifying what each unfixed issue would have cost.
+- Statistics beyond requirement: bootstrap CIs (2,000 seeded resamples) + Kruskal–Wallis
+  test behind the null result; Pearson r and skew/kurtosis diagnostics.
+- All six charts carry their numbers on the saved PNG — standalone-readable evidence.
+- Raw-frame integrity proof cell (§3.9); imputation audit trail with ticket IDs (§3.5).
+- Honest null result on Chart 2 reported as statistically absent, not narrated into a trend.
+- Dataset SHA-256 fingerprint (Phase 0) + pinned `requirements.txt` + committed
+  `build_notebook.py` + ready-to-paste `PR_DESCRIPTION.md`.
 
 ## Limitations (honest)
 
