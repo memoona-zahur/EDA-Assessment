@@ -24,12 +24,19 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 
 | File | Contents |
 |---|---|
-| `week5_friday_eda_assessment.ipynb` | Full pipeline: diagnosis → findings.json → justified cleaning → validation asserts → 3 charts → findings → limitations |
+| `week5_friday_eda_assessment.ipynb` | Full pipeline: diagnosis → findings.json → justified cleaning → validation asserts → 6 charts → findings → limitations |
 | `tickets_clean.csv` | 4,000 clean rows |
 | `findings.json` | Raw-file issue counts: `{"missing_agent_id": 121, "missing_channel": 193, "duplicate_rows": 12, "negative_resolution_hours": 25, "outlier_resolution_hours": 15}` |
 | `chart_distribution.png` | Histogram: right-skewed durations, median 10.2 h vs mean 12.0 h |
 | `chart_category_comparison.png` | Mean resolution by priority ±95% CI — honest null result |
 | `chart_relationship.png` | Resolution vs creation date + 7-day rolling mean — no drift |
+| `04_before_after_cleaning.png` | **Bonus** — raw vs cleaned overlay; the corrupted mean and the 999-spike vanish visibly |
+| `05_misleading_vs_honest.png` | **Bonus** — truncated vs full y-axis on the same data (quiz Q8 demonstrated) |
+| `06_channel_mix_unknown.png` | **Bonus** — intake mix with the 4.8% Unknown gap kept visible |
+| `theory_quiz_answers.md` | Part 2 written answers (8 questions) |
+| `technical_summary.md` | Standalone plain-language write-up for non-technical readers |
+| `SELF_REVIEW.md` | Requirement-by-requirement verification + adversarial self-review |
+| `build_notebook.py` | Reproducible build script that generates the notebook programmatically |
 
 ## Key results
 
@@ -42,25 +49,48 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 ## How to run
 
 ```bash
-pip install pandas numpy matplotlib pytest jupyter   # environment
+# Create and activate the virtual environment (already gitignored)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install pandas numpy matplotlib scipy pytest nbformat nbclient nbconvert ipykernel
+
+# Regenerate dataset (spec-exact, seed=7), rebuild + execute notebook headlessly,
+# then run both test suites — this is exactly how the submission was verified
+python generate_data.py
 jupyter nbconvert --to notebook --execute --inplace week5_friday_eda_assessment.ipynb
 python -m pytest test_friday_sample.py test_own_verification.py -v
 ```
 
-The notebook regenerates all four output files from `tickets_raw.csv`; it ends by
-running the test suite itself and embedding the result.
+The notebook regenerates all output files from `tickets_raw.csv` and ends by running
+the test suite itself, embedding the result. `build_notebook.py` can regenerate the
+notebook itself: `python build_notebook.py full` (or `v1` for diagnosis-only stages).
 
 ## Verification
 
 - **Given self-check:** `test_friday_sample.py` — 3/3 pass.
-- **Self-invented adversarial suite:** `test_own_verification.py` — 12 checks that
+- **Self-invented adversarial suite:** `test_own_verification.py` — 14 checks that
   target "looks correct but is wrong" failures: row-count identity, casing fixed by
   mapping not filtering, Unknown-count == raw-missing-count, agent NaN preserved
   (not fabricated), findings recomputed from raw AND locked to known values,
   **PNG magic-byte check** (the given size-only test accepts renamed text files),
-  and a statistical canary (mean within 2 h of median detects sentinel leaks).
+  a statistical canary (mean within 2 h of median detects sentinel leaks),
+  raw-file immutability guard, and bonus-chart format checks. → **17/17 total pass.**
 - **Notebook hygiene:** executed top-to-bottom on a fresh kernel with zero cell errors;
-  post-clean assert battery stops the notebook if any claim breaks.
+  post-clean assert battery stops the notebook if any claim breaks; §3.9 proves the
+  raw DataFrame was never modified in place.
+
+## Beyond-minimum additions
+
+- Duplicate-contamination audit (§2.5) and sentinel-vs-IQR-tail separation (§2.4) —
+  two analyses the spec never asked for that defend the findings.json convention and
+  protect ~hundreds of legitimate slow tickets from naive outlier filters.
+- Raw-frame integrity proof cell (§3.9), imputation audit trail with ticket IDs (§3.5).
+- Scipy skewness/kurtosis quantifying distribution shape before plotting it.
+- Honest null result on Chart 2 (overlapping CIs reported as "no real difference").
+- Misleading-vs-honest chart demonstrating quiz Q8 mechanism on our own data.
+- Full top-performer documentation set: SELF_REVIEW.md, technical_summary.md, quiz answers.
 
 ## Limitations (honest)
 
