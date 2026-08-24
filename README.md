@@ -27,12 +27,12 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 | `week5_friday_eda_assessment.ipynb` | Full pipeline: executive summary → diagnosis → findings.json → justified cleaning → audit ledger → 6 charts → statistical testing → limitations |
 | `tickets_clean.csv` | 4,000 clean rows |
 | `findings.json` | Raw-file issue counts: `{"missing_agent_id": 121, "missing_channel": 193, "duplicate_rows": 12, "negative_resolution_hours": 25, "outlier_resolution_hours": 15}` |
-| `chart_distribution.png` | Histogram with on-chart stats box (n, median, mean, std, max, skew) |
-| `chart_category_comparison.png` | Priority means with **bootstrap 95% CIs** printed per bar — honest null result |
-| `chart_relationship.png` | Date vs resolution scatter — slope, Pearson r and rolling endpoints annotated |
-| `bonus_before_after_cleaning.png` | **Additional** — raw vs cleaned overlay; the corrupted mean and the 999-spike vanish visibly |
-| `bonus_misleading_vs_honest.png` | **Additional** — truncated vs full y-axis on the same data (quiz Q8 demonstrated) |
-| `bonus_channel_mix_unknown.png` | **Additional** — intake mix with the 4.8% Unknown gap kept visible |
+| `chart_distribution.png` | **Chart 1** (required name) — histogram with on-chart stats box (n, median, mean, std, max, skew) |
+| `chart_category_comparison.png` | **Chart 2** (required name) — priority means with bootstrap 95% CIs printed per bar; honest null result |
+| `chart_relationship.png` | **Chart 3** (required name) — date vs resolution scatter; slope, Pearson r and rolling endpoints annotated |
+| `04_before_after_cleaning.png` | Chart 4 (additional) — raw vs cleaned overlay; the corrupted mean and the 999-spike vanish visibly |
+| `05_misleading_vs_honest.png` | Chart 5 (additional) — truncated vs full y-axis on the same data (quiz Q8 demonstrated) |
+| `06_channel_mix_unknown.png` | Chart 6 (additional) — intake mix with the 4.8% Unknown gap kept visible |
 | `theory_quiz_answers.md` | Part 2 written answers (8 questions) |
 | `technical_summary.md` | Standalone plain-language write-up for non-technical readers |
 | `SELF_REVIEW.md` | Requirement-by-requirement verification + self-assessment |
