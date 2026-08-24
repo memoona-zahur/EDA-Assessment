@@ -30,14 +30,12 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 | `chart_distribution.png` | Histogram with on-chart stats box (n, median, mean, std, max, skew) |
 | `chart_category_comparison.png` | Priority means with **bootstrap 95% CIs** printed per bar — honest null result |
 | `chart_relationship.png` | Date vs resolution scatter — slope, Pearson r and rolling endpoints annotated |
-| `04_before_after_cleaning.png` | **Bonus** — raw vs cleaned overlay; the corrupted mean and the 999-spike vanish visibly |
-| `05_misleading_vs_honest.png` | **Bonus** — truncated vs full y-axis on the same data (quiz Q8 demonstrated) |
-| `06_channel_mix_unknown.png` | **Bonus** — intake mix with the 4.8% Unknown gap kept visible |
+| `bonus_before_after_cleaning.png` | **Additional** — raw vs cleaned overlay; the corrupted mean and the 999-spike vanish visibly |
+| `bonus_misleading_vs_honest.png` | **Additional** — truncated vs full y-axis on the same data (quiz Q8 demonstrated) |
+| `bonus_channel_mix_unknown.png` | **Additional** — intake mix with the 4.8% Unknown gap kept visible |
 | `theory_quiz_answers.md` | Part 2 written answers (8 questions) |
 | `technical_summary.md` | Standalone plain-language write-up for non-technical readers |
-| `SELF_REVIEW.md` | Requirement-by-requirement verification + adversarial self-review |
-| `PR_DESCRIPTION.md` | Ready-to-paste pull-request body |
-| `build_notebook.py` | Reproducible build script that generates the notebook programmatically |
+| `SELF_REVIEW.md` | Requirement-by-requirement verification + self-assessment |
 | `requirements.txt` | Exact pinned library versions used for this submission |
 
 ## Key results
@@ -66,8 +64,7 @@ python -m pytest test_friday_sample.py test_own_verification.py -v
 ```
 
 The notebook regenerates all output files from `tickets_raw.csv` and ends by running
-the test suite itself, embedding the result. `build_notebook.py` can regenerate the
-notebook itself: `python build_notebook.py full` (or `v1` for diagnosis-only stages).
+the test suite itself, embedding the result.
 
 ## Verification
 
@@ -85,7 +82,7 @@ notebook itself: `python build_notebook.py full` (or `v1` for diagnosis-only sta
   errors; post-clean assert battery stops the notebook if any claim breaks; §3.9
   proves the raw DataFrame was never modified in place.
 
-## Beyond-minimum additions
+## Additional work beyond requirements
 
 - Executive summary + contents table — the whole story in 30 seconds.
 - Duplicate-contamination audit (§2.5) and sentinel-vs-IQR-tail separation (§2.4) —
@@ -98,8 +95,7 @@ notebook itself: `python build_notebook.py full` (or `v1` for diagnosis-only sta
 - All six charts carry their numbers on the saved PNG — standalone-readable evidence.
 - Raw-frame integrity proof cell (§3.9); imputation audit trail with ticket IDs (§3.5).
 - Honest null result on Chart 2 reported as statistically absent, not narrated into a trend.
-- Dataset SHA-256 fingerprint (Phase 0) + pinned `requirements.txt` + committed
-  `build_notebook.py` + ready-to-paste `PR_DESCRIPTION.md`.
+- Dataset SHA-256 fingerprint (Phase 0) and pinned `requirements.txt` for exact reproducibility.
 
 ## Limitations (honest)
 

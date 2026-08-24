@@ -1,8 +1,8 @@
 # Self-Review — Week 05 Friday Assessment
 
-Reviewed against the spec (`eda-assessment.md`), the given sample checks, and the
-top-performer standard: every claim below is backed by a command run or a notebook
-cell reference — nothing is "should work".
+Reviewed against the spec (`eda-assessment.md`), the given sample checks, and an
+additional self-imposed verification standard: every claim below is backed by a
+command run or a notebook cell reference — nothing is "should work".
 
 ## Requirements Coverage
 
@@ -22,7 +22,7 @@ cell reference — nothing is "should work".
 | Survives Restart Kernel & Run All | PASS | Executed headlessly on a fresh kernel (`jupyter nbconvert --execute`) — 77 cells, zero errors |
 | Sample self-check green | PASS | `pytest test_friday_sample.py` → 3 passed |
 
-## Beyond-Minimum Additions (the "repeated pattern")
+## Additions beyond the assignment requirements
 
 1. **Adversarial verification suite** — 18 invented pytest checks (`test_own_verification.py`)
    targeting failure modes the given structural tests cannot see:
@@ -60,8 +60,7 @@ cell reference — nothing is "should work".
 11. **Imputation audit trail** — all 15 sentinel ticket_ids printed; medians computed
     excluding the sentinels themselves.
 12. **Reproducibility engineering** — dataset SHA-256 fingerprint recorded (Phase 0),
-    pinned `requirements.txt`, committed `build_notebook.py` that regenerates the notebook,
-    venv-based setup, ready-to-paste `PR_DESCRIPTION.md`.
+    pinned `requirements.txt`, virtual-environment setup documented in the README.
 
 ## Adversarial Self-Questions
 
