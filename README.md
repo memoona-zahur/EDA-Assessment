@@ -26,7 +26,7 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 |---|---|
 | `week5_friday_eda_assessment.ipynb` | Full pipeline: executive summary → diagnosis → findings.json → justified cleaning → audit ledger → 6 charts → statistical testing → limitations |
 | `tickets_clean.csv` | 4,000 clean rows |
-| `findings.json` | Raw-file issue counts: `{"missing_agent_id": 121, "missing_channel": 193, "duplicate_rows": 12, "negative_resolution_hours": 25, "outlier_resolution_hours": 15}` |
+| `findings.json` | Raw-file issue counts: `{"missing_agent_id": 121, "missing_channel": 193, "duplicate_rows": 12, "negative_resolution_hours": 25, "outlier_resolution_hours": 15}` — measured on the raw file by design; e.g. 121 includes both copies of one duplicated record, so the clean file retains 120 NaN agent IDs (notebook Section 2.5 quantifies this and a dedicated test pins both sides) |
 | `chart_distribution.png` | **Chart 1** (required name) — histogram with on-chart stats box (n, median, mean, std, max, skew) |
 | `chart_category_comparison.png` | **Chart 2** (required name) — priority means with bootstrap 95% CIs printed per bar; honest null result |
 | `chart_relationship.png` | **Chart 3** (required name) — date vs resolution scatter; slope, Pearson r and rolling endpoints annotated |
