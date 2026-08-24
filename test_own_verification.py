@@ -113,3 +113,28 @@ def test_bonus_charts_are_real_pngs():
     for name in BONUS_CHARTS:
         head = Path(name).read_bytes()[:8]
         assert head == PNG_MAGIC and Path(name).stat().st_size > 1000, name
+
+
+def test_findings_json_keys_exactly_match_spec():
+    # Stricter than the given subset check: no missing keys AND no sneaky extras.
+    assert set(FINDINGS) == {
+        "missing_agent_id", "missing_channel", "duplicate_rows",
+        "negative_resolution_hours", "outlier_resolution_hours",
+    }
+
+
+def test_clean_schema_identical_to_raw():
+    # Proves no schema drift: cleaning fixed values, never renamed/dropped columns.
+    assert set(CLEAN.columns) == set(RAW.columns)
+
+
+def test_resolution_hours_within_physical_plausibility():
+    # True gamma body tops out near 62 h; anything near 999 means a sentinel survived.
+    assert CLEAN["resolution_hours"].max() < 100
+    assert CLEAN["resolution_hours"].min() >= 0
+
+
+def test_requirements_file_pins_the_stack_that_ran_this():
+    reqs = Path("requirements.txt").read_text()
+    for pkg in ("pandas==", "numpy==", "matplotlib==", "scipy=="):
+        assert pkg in reqs, f"{pkg} version not pinned"
