@@ -94,3 +94,22 @@ def test_clean_mean_is_statistically_sane_canary():
     # corrupted 15.56 h; cleaned data must sit near the robust median instead.
     mean, median = CLEAN["resolution_hours"].mean(), CLEAN["resolution_hours"].median()
     assert abs(mean - median) < 2.0 and 11.0 < mean < 13.0
+
+
+def test_raw_csv_still_contains_all_planted_problems():
+    # Guards the spec rule "original must stay inspectable and unmodified".
+    assert len(RAW) == 4012
+    assert (RAW["resolution_hours"] < 0).sum() == 25
+    assert (RAW["resolution_hours"] == 999).sum() == 15
+    assert RAW["priority"].nunique() == 4
+
+
+BONUS_CHARTS = ["04_before_after_cleaning.png", "05_misleading_vs_honest.png",
+                "06_channel_mix_unknown.png"]
+
+
+def test_bonus_charts_are_real_pngs():
+    # Beyond-minimum deliverables held to the same standard as required ones.
+    for name in BONUS_CHARTS:
+        head = Path(name).read_bytes()[:8]
+        assert head == PNG_MAGIC and Path(name).stat().st_size > 1000, name
