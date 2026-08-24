@@ -1,0 +1,7 @@
+{
+  "missing_agent_id": 121,
+  "missing_channel": 193,
+  "duplicate_rows": 12,
+  "negative_resolution_hours": 25,
+  "outlier_resolution_hours": 15
+}
