@@ -79,29 +79,29 @@ the test suite itself, embedding the result.
   schema-drift detector, plausibility bounds, and requirements-pin enforcement.
   → **21/21 total pass.**
 - **Notebook hygiene:** executed top-to-bottom on a fresh kernel — 77 cells, zero
-  errors; post-clean assert battery stops the notebook if any claim breaks; §3.9
+  errors; post-clean assert battery stops the notebook if any claim breaks; Section 3.9
   proves the raw DataFrame was never modified in place.
 
 ## Additional work beyond requirements
 
 - Executive summary + contents table — the whole story in 30 seconds.
-- Duplicate-contamination audit (§2.5) and sentinel-vs-IQR-tail separation (§2.4) —
+- Duplicate-contamination audit (Section 2.5) and sentinel-vs-IQR-tail separation (Section 2.4) —
   two analyses the spec never asked for that defend the findings.json convention and
   protect hundreds of legitimate slow tickets from naive outlier filters.
-- Consolidated audit section (§3.10): cleaning ledger, completeness scorecard, and a
+- Consolidated audit section (Section 3.10): cleaning ledger, completeness scorecard, and a
   cost-of-dirty-data counterfactual quantifying what each unfixed issue would have cost.
 - Statistics beyond requirement: bootstrap CIs (2,000 seeded resamples) + Kruskal–Wallis
   test behind the null result; Pearson r and skew/kurtosis diagnostics.
 - All six charts carry their numbers on the saved PNG — standalone-readable evidence.
-- Raw-frame integrity proof cell (§3.9); imputation audit trail with ticket IDs (§3.5).
+- Raw-frame integrity proof cell (Section 3.9); imputation audit trail with ticket IDs (Section 3.5).
 - Honest null result on Chart 2 reported as statistically absent, not narrated into a trend.
 - Dataset SHA-256 fingerprint (Phase 0) and pinned `requirements.txt` for exact reproducibility.
 
 ## Limitations (honest)
 
 - `abs()` assumes pure sign flips; per-row proof requires the source system.
-- The 15 imputed durations are priority-medians (estimates), ticket IDs printed in §3.5.
+- The 15 imputed durations are priority-medians (estimates), ticket IDs printed in Section 3.5.
 - 120 missing agent IDs are unrecoverable without CRM backfill.
 - `findings.json` measures the delivered raw file, duplicates included (divergence
-  quantified in notebook §2.5: exactly one record).
+  quantified in notebook Section 2.5: exactly one record).
 - Conclusions cover two months only; re-run on rolling windows before generalizing.

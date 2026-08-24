@@ -33,7 +33,7 @@ Every problem was quantified *first*, locked into `findings.json`, then fixed wi
 ## What this analysis could NOT do (honest limitations)
 
 - The sign-flip recovery assumes negatives were only sign-corrupted; without the source system we can't verify row-by-row.
-- The 15 imputed durations are estimates (priority medians), not real observations — flagged with ticket IDs in §3.5 of the notebook.
+- The 15 imputed durations are estimates (priority medians), not real observations — flagged with ticket IDs in Section 3.5 of the notebook.
 - The 120 missing agent IDs are permanently unrecoverable without CRM backfill.
-- Findings counts describe the delivered raw file (duplicates included); the tiny divergence from record-level truth is quantified in §2.5.
+- Findings counts describe the delivered raw file (duplicates included); the tiny divergence from record-level truth is quantified in Section 2.5.
 - Conclusions cover two months only; they should not be generalized beyond March–April 2024 without re-running the pipeline on more windows.

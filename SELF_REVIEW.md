@@ -10,9 +10,9 @@ command run or a notebook cell reference — nothing is "should work".
 |---|---|---|
 | Exact generation code, unmodified | PASS | `generate_data.py` matches spec verbatim; seed=7; shape assert `(4012, 6)` passes |
 | Diagnosis before fixing: `.head()` `.info()` `.describe()` `.isna().sum()` ≥1 `.value_counts()` | PASS | Notebook Phase 1–2 (cells 4–13): all five present, plus missingness % table |
-| Markdown cell listing every problem found **before** fixing | PASS | §2 "Diagnosis Findings" table — all six issues with counts and percentages |
+| Markdown cell listing every problem found **before** fixing | PASS | Section 2 "Diagnosis Findings" table — all six issues with counts and percentages |
 | Per-issue cleaning decision + one-sentence justification each | PASS | Phase 3.1–3.7: each step has **why** AND **why-not-alternative** (exceeds one sentence) |
-| Work on a copy; raw frame inspectable & unmodified at end | PASS | §3.9 proof cell asserts raw shape/counts intact after all cleaning |
+| Work on a copy; raw frame inspectable & unmodified at end | PASS | Section 3.9 proof cell asserts raw shape/counts intact after all cleaning |
 | `findings.json` from **before any cleaning**, plain ints | PASS | Written in Phase 2 (pre-cleaning); 5 keys, Python `int`, values {121, 193, 12, 25, 15} |
 | `tickets_clean.csv` via `to_csv(index=False)` | PASS | Final cell; 4,000 rows; column superset check passes |
 | 3 charts via `fig, ax = plt.subplots()`, labeled, legend where relevant | PASS | Charts 1–3: titles, axis labels, legends on all; saved dpi=150 |
@@ -37,13 +37,13 @@ command run or a notebook cell reference — nothing is "should work".
    - physical-plausibility bound (max < 100 h catches surviving sentinels)
    - raw-file immutability guard
    - requirements.txt pin enforcement
-2. **Duplicate-contamination audit (§2.5)** — spec never asks whether duplicates carry
+2. **Duplicate-contamination audit (Section 2.5)** — spec never asks whether duplicates carry
    other planted issues; measured: exactly one record, so findings.json's raw-count
    convention is defended with numbers.
-3. **Sentinel-vs-tail separation (§2.4)** — IQR fence computed to prove only the exact-999
+3. **Sentinel-vs-tail separation (Section 2.4)** — IQR fence computed to prove only the exact-999
    pile-up is corruption; hundreds of legitimate slow tickets survive naive filtering elsewhere.
-4. **Raw-frame integrity proof (§3.9)** — spec rule converted into executable evidence.
-5. **Consolidated audit section (§3.10)** — cleaning ledger, column-completeness scorecard,
+4. **Raw-frame integrity proof (Section 3.9)** — spec rule converted into executable evidence.
+5. **Consolidated audit section (Section 3.10)** — cleaning ledger, column-completeness scorecard,
    and a "cost of dirty data" counterfactual table tying every fix to the measurable damage
    it prevented (~29% phantom workload, half-hidden High-priority volume, vanishing 4.8% channel share).
 6. **Statistics beyond requirement** — bootstrap percentile CIs (2,000 seeded resamples) and a
@@ -66,12 +66,12 @@ command run or a notebook cell reference — nothing is "should work".
 
 - **What looks correct but might be wrong?**
   The `abs()` fix for negatives is an assumption (pure sign-flip). Mitigated with
-  magnitude-range evidence (§3.4) and listed as limitation #1 rather than hidden.
+  magnitude-range evidence (Section 3.4) and listed as limitation #1 rather than hidden.
 - **What would break if input changed?**
   The suite hard-codes planted amounts (121/193/12/25/15) — intentional: this dataset's
   contract. On new data, the recount-from-raw test still validates internal consistency.
 - **What could a skeptic question?**
-  Median-imputation for sentinels alters group means slightly. Answered in §3.5: audit
+  Median-imputation for sentinels alters group means slightly. Answered in Section 3.5: audit
   trail printed, medians exclude sentinels themselves, impact quantified (~29% raw-mean
   correction vs negligible clean-group shift).
 - **What did we NOT do?**
