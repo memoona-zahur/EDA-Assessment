@@ -69,15 +69,18 @@ the test suite itself, embedding the result.
 ## Verification
 
 - **Given self-check:** `test_friday_sample.py` — 3/3 pass.
-- **Self-invented adversarial suite:** `test_own_verification.py` — 18 checks that
+- **Self-invented adversarial suite:** `test_own_verification.py` — 20 checks that
   target "looks correct but is wrong" failures: row-count identity, casing fixed by
   mapping not filtering, Unknown-count == raw-missing-count, agent NaN preserved
   (not fabricated), findings recomputed from raw AND locked to known values AND
   key-set equality (stricter than the given subset check), **PNG magic-byte check**
   (the given size-only test accepts renamed text files), a statistical canary
   (mean within 2 h of median detects sentinel leaks), raw-file immutability guard,
-  schema-drift detector, plausibility bounds, and requirements-pin enforcement.
-  → **21/21 total pass.**
+  schema-drift detector, plausibility bounds, requirements-pin enforcement, and two
+  **claim-pinning tests**: the priority null result (Kruskal-Wallis p > 0.05 on the
+  delivered CSV) and the survival of over a hundred real slow tickets beyond the IQR
+  fence (guards against over-aggressive outlier deletion).
+  → **23/23 total pass.**
 - **Notebook hygiene:** executed top-to-bottom on a fresh kernel — 77 cells, zero
   errors; post-clean assert battery stops the notebook if any claim breaks; Section 3.9
   proves the raw DataFrame was never modified in place.

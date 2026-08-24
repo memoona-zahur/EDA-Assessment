@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
+from scipy import stats
 
 RAW = pd.read_csv("tickets_raw.csv")
 CLEAN = pd.read_csv("tickets_clean.csv")
@@ -138,3 +139,21 @@ def test_requirements_file_pins_the_stack_that_ran_this():
     reqs = Path("requirements.txt").read_text()
     for pkg in ("pandas==", "numpy==", "matplotlib==", "scipy=="):
         assert pkg in reqs, f"{pkg} version not pinned"
+
+
+def test_priority_null_result_is_pinned_by_test():
+    # The headline claim "no meaningful priority effect" must hold on the
+    # delivered CSV itself — if a future edit manufactures a difference,
+    # this test fails instead of letting the report drift from the data.
+    groups = [g["resolution_hours"].values for _, g in CLEAN.groupby("priority")]
+    _, p = stats.kruskal(*groups)
+    assert p > 0.05
+
+
+def test_over_hundred_real_slow_tickets_survive_cleaning():
+    # Guards against over-aggressive outlier deletion: tickets beyond the IQR
+    # fence are genuine work difficulty, not corruption — they must remain.
+    rh = CLEAN["resolution_hours"]
+    q1, q3 = rh.quantile([0.25, 0.75])
+    fence = q3 + 1.5 * (q3 - q1)
+    assert int((rh > fence).sum()) > 100
