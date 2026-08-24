@@ -104,8 +104,8 @@ def test_raw_csv_still_contains_all_planted_problems():
     assert RAW["priority"].nunique() == 4
 
 
-BONUS_CHARTS = ["04_before_after_cleaning.png", "05_misleading_vs_honest.png",
-                "06_channel_mix_unknown.png"]
+BONUS_CHARTS = ["chart_before_after_cleaning.png", "chart_misleading_vs_honest.png",
+                "chart_channel_mix_unknown.png"]
 
 
 def test_bonus_charts_are_real_pngs():
