@@ -24,7 +24,7 @@ command run or a notebook cell reference — nothing is "should work".
 
 ## Additions beyond the assignment requirements
 
-1. **Adversarial verification suite** — 18 invented pytest checks (`test_own_verification.py`)
+1. **Adversarial verification suite** — 20 invented pytest checks (`test_own_verification.py`)
    targeting failure modes the given structural tests cannot see:
    - PNG magic-byte validation (given size-only check accepts renamed text files)
    - casing fix proven by *counting* High rows (catches filter-instead-of-map)
@@ -75,7 +75,8 @@ command run or a notebook cell reference — nothing is "should work".
   trail printed, medians exclude sentinels themselves, impact quantified (~29% raw-mean
   correction vs negligible clean-group shift).
 - **What did we NOT do?**
-  No statistical significance testing on the priority differences (CIs shown instead);
+  No *parametric* significance testing (ANOVA/t-test) on the priority differences — the
+  non-parametric Kruskal–Wallis test was used instead because durations are skewed;
   agent-level analysis skipped because IDs are near-uniform random labels — both stated,
   not papered over.
 

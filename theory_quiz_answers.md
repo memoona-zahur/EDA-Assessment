@@ -30,4 +30,4 @@ A **bar chart** — bar heights compare discrete, unrelated groups directly. A l
 
 **Q8. One concrete way to make a real chart misleading without changing any data?**
 
-Truncate the y-axis to start just below the maximum bar (e.g., ylim starting at 11.6 h instead of 0): tiny differences then fill the entire visual field and look like multi-fold disparities. Same numbers, opposite story — demonstrated concretely on our own Chart-2 data in `05_misleading_vs_honest.png`.
+Truncate the y-axis to start just below the maximum bar (e.g., ylim starting at 11.6 h instead of 0): tiny differences then fill the entire visual field and look like multi-fold disparities. Same numbers, opposite story — demonstrated concretely on our own Chart-2 data in `chart_misleading_vs_honest.png`.
