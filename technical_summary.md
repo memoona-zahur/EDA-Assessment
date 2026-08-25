@@ -28,7 +28,7 @@ Every problem was quantified *first*, locked into `findings.json`, then fixed wi
 1. **The raw numbers overstated workload by ~29%.** The average resolution time looked like 15.6 hours before cleaning and is really about 12.0 hours — anyone reporting the uncleaned average to management inflated perceived effort by nearly a third.
 2. **Priority made no measurable difference to speed.** All three priority bands resolve in roughly 11.8–12.2 hours on average, with confidence intervals that overlap heavily — the honest conclusion is that urgent labelling isn't buying faster fixes this quarter.
 3. **Half of "High" priority was invisible** until the casing split was merged — dashboards built on the raw column were steering prioritization with wrong volumes.
-4. **The process was stable over the period studied** — resolution times show no upward or downward drift across March–April, so no hidden incident or improvement occurred.
+4. **The process was stable over the period studied** — resolution times show no upward or downward drift across March–May 2024, so no hidden incident or improvement occurred.
 
 ## What this analysis could NOT do (honest limitations)
 
@@ -36,4 +36,4 @@ Every problem was quantified *first*, locked into `findings.json`, then fixed wi
 - The 15 imputed durations are estimates (priority medians), not real observations — flagged with ticket IDs in Section 3.5 of the notebook.
 - The 120 missing agent IDs are permanently unrecoverable without CRM backfill.
 - Findings counts describe the delivered raw file (duplicates included); the tiny divergence from record-level truth is quantified in Section 2.5.
-- Conclusions cover two months only; they should not be generalized beyond March–April 2024 without re-running the pipeline on more windows.
+- Conclusions cover a single 83-day window (March 1 – May 23, 2024); they should not be generalized beyond it without re-running the pipeline on more windows.

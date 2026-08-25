@@ -44,7 +44,7 @@ Full exploratory analysis of a deliberately corrupted support-ticket dataset:
 2. **Casing split silently undercounted High priority by ~49.6%** until normalized.
 3. **No meaningful speed difference between priorities** (means 11.79–12.21 h,
    overlapping CIs) — reported as a null result rather than a invented trend.
-4. **Process stable across Mar–Apr 2024** (trend slope ≈ +0.00004 h/ticket).
+4. **Process stable across Mar–May 2024** (trend slope ≈ +0.00004 h/ticket).
 
 ## How to run
 
@@ -107,4 +107,4 @@ the test suite itself, embedding the result.
 - 120 missing agent IDs are unrecoverable without CRM backfill.
 - `findings.json` measures the delivered raw file, duplicates included (divergence
   quantified in notebook Section 2.5: exactly one record).
-- Conclusions cover two months only; re-run on rolling windows before generalizing.
+- Conclusions cover a single 83-day window; re-run on rolling windows before generalizing.
